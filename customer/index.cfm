@@ -1,0 +1,74 @@
+<cfoutput>
+
+    <cfparam name="url.page" default="1" />
+    <cfparam name="url.maxRows" default="10" />
+
+    <cfset variables.qGetCustomer = new components.customerGateway().list(
+        page = url.page,
+        maxRows = url.maxRows
+    )/>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>customer list</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    </head>
+
+    <body>
+
+        <cfinclude template="/includes/header.cfm" />
+
+        <h1 class="text-center mt-2">CUSTOMER</h1>
+
+        <div class="container">
+
+            <div class="float-end mb-4">
+                <button class="btn btn-dark ml-auto"><a href="add-edit.cfm" class="text-light link-underline-dark">ADD</a></button>
+            </div>
+
+            <cfset variables.columns = [
+                {
+                    'label' : 'Customer Id',
+                    'fieldName' : 'customer_id'
+                },
+                {
+                    'label' : 'First Name',
+                    'fieldName' : 'first_name'
+                },
+                {
+                    'label' : 'Last Name',
+                    'fieldName' : 'last_name'
+                },
+                {
+                    'label' : 'Email',
+                    'fieldName' : 'email'
+                },
+                {
+                    'label' : 'Action',
+                    'content' : (customer) => {
+                        return '<a href="add-edit.cfm?id=#customer.customer_id#">Edit</a>';
+                    }
+                }
+            ] />
+
+            <cfset new components.utility().CreateTable(
+                columns = variables.columns,
+                qData = variables.qGetCustomer
+            ) />
+
+        </div>
+
+        <div class="text-center pt-4">
+            <input type="button" class="btn btn-dark ml-auto" value="PREVIOUS" onclick="prev_pages()">
+            <input type="button" class="btn btn-dark ml-auto" value="NEXT" onclick="next_pages()">
+        </div>
+
+        <input type="hidden" name="page" value="#url.page#"/>
+    
+        <script src="/assests/helper.js"></script>
+    </body>
+</html>
+</cfoutput>
