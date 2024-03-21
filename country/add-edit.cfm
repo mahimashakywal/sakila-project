@@ -4,11 +4,11 @@
 
 <cfif val(url.id)>
 
-    <cfset variables.qGetCountry = new components.countryGateway().get( id = url.id ) />
+    <cfset variables.country = new components.countryGateway().get( id = url.id ) />
 
-    <cfset form.country = variables.qGetCountry.country />
-
+    <cfset form.country = variables.country.getCountry()/>
 </cfif>
+ 
  
 <!DOCTYPE html>
 <html>

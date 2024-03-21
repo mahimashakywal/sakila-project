@@ -8,16 +8,15 @@
 
 <cfif val(url.id)>
 
-    <cfset variables.qGetCustomer = new components.customerGateway().get(
-        id = url.id
-    ) />
-    <cfset form.first_name = variables.qGetCustomer.first_name />
-    <cfset form.last_name = variables.qGetCustomer.last_name />
-    <cfset form.email = variables.qGetCustomer.email />
-    <cfset form.store_id = variables.qGetCustomer.store_id />
+    <cfset variables.customer = new components.customerGateway().get( customer_id = url.id ) />
+
+    <cfset form.first_name = variables.customer.getFirstName() />
+    <cfset form.last_name = variables.customer.getLastName() />
+    <cfset form.email = variables.customer.getEmail() />
+    <cfset form.store_id = variables.customer.getStoreId() />
 
 </cfif>
- 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +24,7 @@
     <link rel="stylesheet" href="style-ticket-booking.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assests/helper.js"></script>
 
 </head>
 

@@ -65,10 +65,10 @@ function tandcChecked(obj, message = 'terma and condition is required') {
 }
 
 function prev_pages() {
-                let page = document.querySelector("input[name=page]").value;
-                document.querySelector("input[name=page]").value = page--;
-                window.location.href = `${location.origin}${location.pathname}?page=${page}`;
-            }
+    let page = document.querySelector("input[name=page]").value;
+    document.querySelector("input[name=page]").value = page--;
+    window.location.href = `${location.origin}${location.pathname}?page=${page}`;
+}
         
 function next_pages() {
     let page = document.querySelector("input[name=page]").value;

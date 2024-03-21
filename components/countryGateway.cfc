@@ -1,4 +1,4 @@
-<cfcomponent displayname="countryGateway" output="false" >
+<cfcomponent displayName="countryGateway" output="true" >
 
     <cffunction name="list" access="public" returntype="query">
 
@@ -18,54 +18,25 @@
 
     </cffunction>
 
-    <cffunction name="get" access="public" returntype="query">
+    <cffunction name="get" access="public" returntype="country" output="true">
 
         <cfargument name="id" type="numeric" required="true" />
 
-        <cfquery name="local.qCountry" datasource="sakila">
-            select *
-            from country
-            where country_id = <cfqueryparam value="#arguments.id#" cfsqltype="cf_sql_integer" />
-        </cfquery>
-
-        <cfreturn local.qCountry />
-
-    </cffunction>
-
-    <cffunction name="insert" access="public">
-
-            <cfargument name="country" required="true" />
-
-            <cfquery name="local.qCountry" datasource="sakila">
-            insert into country (country)
-            values
-            (
-                <cfqueryparam value="#arguments.country#" cfsqltype="cf_sql_varchar" />
-            );    
-            </cfquery> 
-
-    </cffunction>
-
-    <cffunction name="update" access="public" >
+        <cfset var country = new countryDAO().read( country_id = arguments.id )>
         
-        <cfargument name="country_id" required="true" />
-        <cfargument name="country" required="false" />
-       
-        <cfset var qCountry = get(id = arguments.country_id) />
+        <cfreturn country/>
 
-        <cfif qCountry.recordCount EQ 0>
-            <cfthrow message="Invalid id"/>
+    </cffunction>
+
+
+    <cffunction name="save" access="public" returntype="country" output="false">
+        <cfargument name="country" type="country" required="true" />
+
+        <cfif country.getCountry_id() EQ 0>
+            <cfreturn new countryDAO().insert( arguments.country ) />
+        <cfelse>
+            <cfreturn new countryDAO().update( arguments.country ) />
         </cfif>
-        
-        <cfset var country = queryGetRow( qCountry, 1 ) />
-        <cfset country.append( arguments, true ) />
-
-        <cfquery name="local.updateRecord" datasource="sakila">
-            UPDATE country
-            SET country = <cfqueryparam value="#country.country#" cfsqltype="cf_sql_varchar" />
-            WHERE country_id = <cfqueryparam value="#country.country_id#" cfsqltype="cf_sql_integer" />
-        </cfquery> 
 
     </cffunction>
-
 </cfcomponent>

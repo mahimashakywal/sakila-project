@@ -21,6 +21,17 @@
 
         <cfinclude template="/includes/header.cfm" />
 
+        <nav data-mdb-navbar-init class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/welcome.cfm">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page"><a href="/actor/index.cfm">Actor</a></li>
+                </ol>
+              </nav>
+            </div>
+        </nav>
+
         <h1 class="text-center mt-2">ACTOR</h1>
 
         <div class="container">

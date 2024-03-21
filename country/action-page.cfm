@@ -1,26 +1,9 @@
+<cfset variables.countryGateway = new components.countryGateway() />
+<cfset variables.country = variables.countryGateway.get( id = val(form.country_id) )/>
+<cfset variables.country.setCountry(form.country) />
 
-<cfif form.country_id eq 0>
-    <!--- Insert --->
+<cfset variables.country = variables.countryGateway.save( variables.country ) />
     
-    <cfset variables.countryGateway = new components.countryGateway() />
-    <cfset variables.countryGateway.insert(
-        country = form.country
-    ) />
-
-    <cfset variables.message = "Record inserted suceessfully" />
-
-    
-<cfelseif form.country_id GT 0>
-    <!--- Update --->
-    
-    <cfset variables.countryGateway = new components.countryGateway() />
-    <cfset variables.countryGateway.update(
-        country_id = form.country_id,
-        country = form.country
-    
-    ) />
-
-<cfset variables.message = "Record updated suceessfully" />
-</cfif>
+<cfset variables.message = form.country_id eq 0 ? "Record_inserted_suceessfully" : "Record_updated_suceessfully" />
  
 <cflocation addtoken="false" url="index.cfm?id=#form.country_id#&message=#variables.message#" />

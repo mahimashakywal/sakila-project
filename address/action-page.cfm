@@ -1,34 +1,17 @@
-<cfif form.id eq 0>
-    <!--- Insert --->
-    
-    <cfset variables.addressGateway = new components.addressGateway() />
-    <cfset variables.addressGateway.insert(
-       address = form.address,
-       address2 = form.address2,
-       district = form.district,
-       city_id = form.city,
-       postal_code = form.postal_code,
-       phone = form.phone
-    ) />
+<cfset variables.addressGateway = new components.addressGateway() />
 
-    <cfset variables.message = "Record inserted suceessfully" />
+<cfset variables.address = variables.addressGateway.get( address_id = val(form.address_id) )/>
 
-    
-<cfelseif form.id GT 0>
-    <!--- Update --->
-    
-    <cfset variables.addressGateway = new components.addressGateway() />
-    <cfset variables.addressGateway.update(
-        address_id = form.id,
-        address = form.address,
-        address2 = form.address2,
-        district = form.district,
-        city_id = form.city,
-        postal_code = form.postal_code,
-        phone = form.phone
-    ) />
 
-<cfset variables.message = "Record updated suceessfully" />
-</cfif>
- 
-<cflocation addtoken="false" url="index.cfm?id=#form.id#&message=#variables.message#" />
+<cfset variables.address.setAddress(form.address)/>
+<cfset variables.address.setAddress2(form.address2) />
+<cfset variables.address.setDistrict(form.district) />
+<cfset variables.address.setCity_id(form.city) />
+<cfset variables.address.setPostal_code(form.postal_code) />
+<cfset variables.address.setPhone(form.phone) />
+
+<cfset variables.address = variables.addressGateway.save( variables.address ) />
+
+<cfset variables.message = form.address_id eq 0 ? "Record_inserted_suceessfully" : "Record_updated_suceessfully" />
+
+<cflocation addtoken="false" url="index.cfm?id=#form.address_id#&message=#variables.message#" />

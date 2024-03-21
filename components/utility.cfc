@@ -37,7 +37,7 @@
         <cfargument name="data" type="struct" required="true">
 
         <cfif arguments.column.keyExists('content')>
-            <cfreturn arguments.column.content( arguments.data ) />
+            <cfreturn arguments.column.content(arguments.data ) />
         </cfif>
 
         <cfreturn arguments.data[ arguments.column.fieldName] />

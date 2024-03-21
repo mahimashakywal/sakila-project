@@ -1,4 +1,4 @@
-<cfcomponent displayName="categoryGateway" output="false" >
+<cfcomponent displayName="categoryGateway" output="true" >
 
     <cffunction name="list" access="public" returntype="query">
 
@@ -18,54 +18,25 @@
 
     </cffunction>
 
-    <cffunction name="get" access="public" returntype="query">
+    <cffunction name="get" access="public" returntype="category" output="true">
 
         <cfargument name="id" type="numeric" required="true" />
 
-        <cfquery name="local.qCategory" datasource="sakila">
-            select *
-            from category
-            where category_id = <cfqueryparam value="#arguments.id#" cfsqltype="cf_sql_integer" />
-        </cfquery>
-
-        <cfreturn local.qCategory />
-
-    </cffunction>
-
-    <cffunction name="insert" access="public">
-
-            <cfargument name="name" required="true" />
-
-            <cfquery name="local.qCategory" datasource="sakila">
-            insert into category (name)
-            values
-            (
-                <cfqueryparam value="#arguments.name#" cfsqltype="cf_sql_varchar" />
-            );    
-            </cfquery> 
-
-    </cffunction>
-
-    <cffunction name="update" access="public" >
+        <cfset var category = new categoryDAO().read( category_id = arguments.id )>
         
-        <cfargument name="category_id" required="true" />
-        <cfargument name="name" required="false" />
-       
-        <cfset var qCategory = get(id = arguments.category_id) />
+        <cfreturn category/>
 
-        <cfif qCategory.recordCount EQ 0>
-            <cfthrow message="Invalid id"/>
+    </cffunction>
+
+
+    <cffunction name="save" access="public" returntype="category" output="false">
+        <cfargument name="category" type="category" required="true" />
+
+        <cfif category.getCategory_id() EQ 0>
+            <cfreturn new categoryDAO().insert( arguments.category ) />
+        <cfelse>
+            <cfreturn new categoryDAO().update( arguments.category ) />
         </cfif>
-        
-        <cfset var category = queryGetRow( qCategory, 1 ) />
-        <cfset category.append( arguments, true ) />
-
-        <cfquery name="local.updateRecord" datasource="sakila">
-            UPDATE category
-            SET name = <cfqueryparam value="#category.name#" cfsqltype="cf_sql_varchar" />
-            WHERE category_id = <cfqueryparam value="#category.category_id#" cfsqltype="cf_sql_integer" />
-        </cfquery> 
 
     </cffunction>
-
 </cfcomponent>

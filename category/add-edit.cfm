@@ -4,11 +4,11 @@
 
 <cfif val(url.id)>
 
-    <cfset variables.qGetCatogory = new components.categoryGateway().get( id = url.id ) />
+    <cfset variables.category = new components.categoryGateway().get( id = url.id ) />
 
-    <cfset form.first_name = variables.qGetCatogory.name />
-
+    <cfset form.name = variables.category.getName()/>
 </cfif>
+ 
  
 <!DOCTYPE html>
 <html>
@@ -32,7 +32,7 @@
 
         <div class="w-25 border border-dark bg-light mx-auto mt-5 mb-5 p-5 rounded ">  
                 
-            <input type="hidden" id="actor_id" name="category_id" value="#url.id#" />
+            <input type="hidden" id="category_id" name="id" value="#url.id#" />
 
             <div class="w-50">      
                 <label for="name">Category Name:<sup>*</sup></label>

@@ -1,26 +1,10 @@
 
-<cfif form.category_id eq 0>
-    <!--- Insert --->
-    
-    <cfset variables.categoryGateway = new components.categoryGateway() />
-    <cfset variables.categoryGateway.insert(
-        name = form.name
-    ) />
+<cfset variables.categoryGateway = new components.categoryGateway() />
+<cfset variables.category = variables.categoryGateway.get( id = val(form.id) )/>
+<cfset variables.category.setName(form.name) />
 
-    <cfset variables.message = "Record inserted suceessfully" />
-
+<cfset variables.category = variables.categoryGateway.save( variables.category ) />
     
-<cfelseif form.category_id GT 0>
-    <!--- Update --->
-    
-    <cfset variables.categoryGateway = new components.categoryGateway() />
-    <cfset variables.categoryGateway.update(
-        category_id = form.category_id,
-        name = form.name
-    
-    ) />
-
-<cfset variables.message = "Record updated suceessfully" />
-</cfif>
+<cfset variables.message = form.id eq 0 ? "Record_inserted_suceessfully" : "Record_updated_suceessfully" />
  
-<cflocation addtoken="false" url="index.cfm?id=#form.category_id#&message=#variables.message#" />
+<cflocation addtoken="false" url="index.cfm?id=#form.id#&message=#variables.message#" />

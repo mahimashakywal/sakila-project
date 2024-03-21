@@ -11,15 +11,13 @@
 
 <cfif val(url.id)>
 
-    <cfset variables.qGetAddress = new components.addressGateway().get(
-        id = url.id
-    ) />
-    <cfset form.address = variables.qGetAddress.address />
-    <cfset form.address2 = variables.qGetAddress.address2 />
-    <cfset form.district = variables.qGetAddress.district />
-    <cfset form.postal_code = variables.qGetAddress.postal_code />
-    <cfset form.phone = variables.qGetAddress.phone />
-    <cfset form.city = variables.qGetAddress.city_id />
+    <cfset variables.address = new components.addressGateway().get(address_id = url.id ) />
+    <cfset form.address = variables.address.getAddress() />
+    <cfset form.address2 = variables.address.getAddress2() />
+    <cfset form.district = variables.address.getDistrict() />
+    <cfset form.postal_code = variables.address.getPostal_code() />
+    <cfset form.phone = variables.address.getPhone() />
+    <cfset form.city = variables.address.getCity_id() />
 </cfif>
  
 <!DOCTYPE html>
@@ -44,7 +42,7 @@
 
         <div class="w-25 border border-dark bg-light mx-auto mt-5 mb-5 p-5 rounded ">  
                 
-            <input type="hidden" id="id" name="id" value="#url.id#" />
+            <input type="hidden" id="id" name="address_id" value="#url.id#" />
 
             <div class="w-50">      
                 <label for="address">Address:<sup>*</sup></label>
