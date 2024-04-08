@@ -34,7 +34,7 @@
             );      
 
             select last_insert_id() id;
-        </cfquery> 
+        </cfquery>x 
 
         <cfset arguments.address.setAddress_id(qAddress.id) />
 

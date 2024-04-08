@@ -10,7 +10,7 @@
 
     <cfset variables.instanse = {} />
 
-    <cffunction name="init" access="public" returntype="address" output="true" >
+    <cffunction name="init" access="public" output="false"  returntype="address">
         <cfargument name="address_id" type="numeric" default="0" />
         <cfargument name="address" type="string" default="" />
         <cfargument name="address2" type="string" default="" />

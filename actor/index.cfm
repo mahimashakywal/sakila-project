@@ -3,10 +3,19 @@
     <cfparam name="url.page" default="1" />
     <cfparam name="url.maxRows" default="10" />
 
-    <cfset variables.qGetActors = new components.actorGateway().list(
+    <!--- <cfset variables.qGetActors = createObject("component","components.actorGateway").list(
+        page = url.page,
+        maxRows = url.maxRows)/> --->
+
+    <cfinvoke component="components.actorGateway" method="list" returnvariable="variables.qGetActors">
+        <cfinvokeargument name="page" value="#url.page#" />
+        <cfinvokeargument name="maxRows" value="#url.maxRows#" />
+    </cfinvoke>
+
+    <!--- <cfset variables.qGetActors = new components.actorGateway().list(
         page = url.page,
         maxRows = url.maxRows
-    )/>
+    )/> --->
 
 <!DOCTYPE html>
 <html>

@@ -41,29 +41,38 @@
                 <button class="btn btn-dark ml-auto"><a href="add-edit.cfm" class="text-light link-underline-dark">ADD</a></button>
             </div>
 
-            <table cellpadding="5" cellspacing="0" width="100%" class="text-center mb-4 table-bordered ">
-                <tr>
-                    <th>Address Id</th>
-                    <th>Address</th>
-                    <th>District</th>
-                    <th>Postal Code</th>
-                    <th>Phone No</th>
-                    <th>Actions</th>
-                </tr>
+    
+                <cfset variables.columns = [
+                    {
+                        'label' : 'Address Id',
+                        'fieldName' : 'address_id'
+                    },
+                    {
+                        'label' : 'Address',
+                        'fieldName' : 'address'
+                    },
+                    {
+                        'label' : 'District',
+                        'fieldName' : 'district'
+                    },
+                    {
+                        'label' : 'Postal Code',
+                        'fieldName' : 'postal_code'
+                    },
+                    {
+                        'label' : 'Phone No',
+                        'fieldName' : 'phone'
+                    },
+                    {
+                        'label' : 'Action',
+                        'content' : (category) => {
+                            return '<a href="add-edit.cfm?id=#variables.qGetAddress.address_id#">Edit</a>';
+                        }
+                    }
+                ] />
+    
+                <cfmodule template="/includes/table.cfm" columns="#variables.columns#" qData="#variables.qGetAddress#" >
 
-                <cfloop query="variables.qGetAddress">
-                    <tr class="text-center">
-                        <td>#variables.qGetAddress.address_id#</td>
-                        <td>#variables.qGetAddress.address#</td>
-                        <td>#variables.qGetAddress.district#</td>
-                        <td>#variables.qGetAddress.postal_code#</td>
-                        <td>#variables.qGetAddress.phone#</td>
-                        <td><a href="add-edit.cfm?id=#variables.qGetAddress.address_id#">Edit</a></td>
-                    </tr>
-                </cfloop>
-
-                
-            </table>
         </div>
 
         <div class="text-center pt-4">
